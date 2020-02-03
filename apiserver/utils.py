@@ -5,6 +5,7 @@ values.
 """
 import time, string, random, socket, pyorient
 import click, smtplib, ssl, json, os
+import pyorient
 from datetime import datetime
 from dateutil.parser import parse, parser
 from werkzeug.utils import secure_filename
@@ -27,6 +28,7 @@ PROTECTED = ["password"]
 ALLOWED_EXTENSIONS = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif', 'csv', 'xlsx']
 MESSAGE_OPENING = MESSAGE_OPENING
 MESSAGE_CLOSING = MESSAGE_CLOSING
+IPS = ["localhost", "172.23.0.2", "172.23.0.3", "172.23.0.4", "172.23.0.5", "172.23.0.6", "172.23.0.7" ]
 
 
 # mail settingspy
@@ -46,6 +48,20 @@ MAIL_DEFAULT_SENDER = 'from@example.com'
 # osint API tokens
 TWITTER_AUTH = TWITTER_AUTH
 SHODAN = SHODAN
+
+def check_HOST_IP():
+
+    user = ODB_USER
+    pswd = ODB_PSWD
+    for ip in IPS:
+        try:
+            click.echo("[%s_apiserver_utils_check_HOST_IP] %s" % (get_datetime(), ip))
+            client = pyorient.OrientDB(ip, 2424)
+            client.connect(user, pswd)
+            click.echo("[%s_apiserver_utils_check_HOST_IP] Connection successful" % (get_datetime()))
+            return ip
+        except Exception:
+            pass
 
 def send_mail(**kwargs):
 
@@ -410,3 +426,4 @@ def check_for_file(request, server):
                     "data": None,
                 }
 
+HOST_IP = check_HOST_IP()
