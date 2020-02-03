@@ -426,4 +426,4 @@ def check_for_file(request, server):
                     "data": None,
                 }
 
-HOST_IP = check_HOST_IP()
+
