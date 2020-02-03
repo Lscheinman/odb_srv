@@ -50,7 +50,7 @@ TWITTER_AUTH = TWITTER_AUTH
 SHODAN = SHODAN
 
 def check_HOST_IP():
-
+    time.sleep(10)
     user = ODB_USER
     pswd = ODB_PSWD
     for ip in IPS:
